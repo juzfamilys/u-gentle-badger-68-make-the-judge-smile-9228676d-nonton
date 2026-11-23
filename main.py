@@ -13,6 +13,15 @@ LINE = (
 )
 
 
+CLICHE = (
+    "kindness matters",
+    "beautiful day",
+    "grateful for today",
+    "made my day",
+    "warmed my heart",
+)
+
+
 def validate(text):
     """Enforce the competition gate: 1-200 chars, single line, not blank."""
     if not isinstance(text, str):
@@ -21,6 +30,10 @@ def validate(text):
         raise ValueError("entry must not be blank or whitespace-only")
     if "\n" in text or "\r" in text:
         raise ValueError("entry must be a single line")
+    lowered = text.lower()
+    for phrase in CLICHE:
+        if phrase in lowered:
+            raise ValueError("entry must not use stock greeting-card phrasing: %r" % phrase)
     count = len(text)
     if count < 1 or count > 200:
         raise ValueError("entry must be 1-200 characters, got %d" % count)
